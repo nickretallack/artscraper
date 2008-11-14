@@ -51,18 +51,15 @@ def unique(list,attr):
 class FurAffinityScraper:
   def parse_user(self,user):
     base = "http://furaffinity.net"
-    user_page = get("%s/user/%s" % (base,user))
-    galleries = user_page.findAll('a',href=re.compile("/gallery/"))
-    galleries = unique(galleries,'href')
+    gallery = "/gallery/%s" % user
     
     things = []
-    for gallery in galleries:
-      for page in xrange(1,999):
-        page_str = "/%d" % page
-        gallery_page = get(base + gallery['href'] + page_str)
-        new_things = gallery_page.findAll('a',href=re.compile("/view/"))
-        if len(new_things) == 0: break
-        things.extend(new_things)
+    for page in xrange(1,999):
+      page_str = "/%d" % page
+      gallery_page = get(base + gallery + page_str)
+      new_things = gallery_page.findAll('a',href=re.compile("/view/"))
+      if len(new_things) == 0: break
+      things.extend(new_things)
 
     return unique(things,'href')
 
