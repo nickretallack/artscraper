@@ -43,33 +43,55 @@ user = "/user/kalu"
 
 userpage = host = "http://malaikawolfcat.artspots.com"
 
+def unique(list,attr):
+  #print list
+  return dict((obj[attr], obj) for obj in list).values()
 
-class FurAffinityscraper:
-  pass
 
-class ArtspotsScraper
-  pass
+class FurAffinityScraper:
+  def parse_user(self,user):
+    base = "http://furaffinity.net"
+    user_page = get("%s/user/%s" % (base,user))
+    galleries = user_page.findAll('a',href=re.compile("/gallery/"))
+    galleries = unique(galleries,'href')
+    
+    things = []
+    for gallery in galleries:
+      for page in xrange(1,999):
+        page_str = "/%d" % page
+        gallery_page = get(base + gallery['href'] + page_str)
+        new_things = gallery_page.findAll('a',href=re.compile("/view/"))
+        if len(new_things) == 0: break
+        things.extend(new_things)
 
-# scrape for galleries
-html = get(userpage)
-galleries = html.findAll('a',href=re.compile("/gallery/"))
-for gallery in galleries:
-  Gallery(gallery)
+    return unique(things,'href')
 
-for gallery in Gallery.all:
-    #for page in xrange(1,999):
-    #page_str = pager(page,host)
-    page_str = "?per_page=100"
-    print host+gallery+page_str
-    html = get(host + gallery + page_str)
-    things = html.findAll('a',href=re.compile("/image/"))
-    if len(things) == 0: break
-    for thing in things:
-      Thing(thing)
+class ArtSpotsScraper:
+  def __init__(self):
+    pass
 
-for thing in Thing.all:
-  print thing
+  def parse_user(self,user):
+    base = "http://%s.artspots.com" % user
 
+    user_page = get(base)
+    galleries = user_page.findAll('a',href=re.compile("/gallery/"))
+    galleries = unique(galleries,'href')
+
+    things = []
+    for gallery in galleries:
+      page_str = "?per_page=100"
+      gallery_page = get(base + gallery['href'] + page_str)
+      new_things = gallery_page.findAll('a',href=re.compile("/image/"))
+      things.extend(new_things)
+
+    return unique(things,'href')
+
+
+#for thing in ArtSpotsScraper().parse_user('malaikawolfcat'):
+#  print thing['href']
+
+for thing in FurAffinityScraper().parse_user('renardv'):
+  print thing['href']
 
 """
 from html.parser import HTMLParser
