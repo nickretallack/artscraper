@@ -62,7 +62,16 @@ class FurAffinityScraper:
         if len(new_things) == 0: break
         things.extend(new_things)
 
-    return unique(things,'href')
+    data = []
+    for thing in things:
+      datum = {}
+      datum['page'] = base + thing['href']
+      thumb = thing.find('img')
+      datum['thumb'] = thumb['src']
+      datum['title'] = thumb['alt']
+      data.append(datum)
+    
+    return data
 
 class ArtSpotsScraper:
   def __init__(self):
@@ -89,7 +98,7 @@ class ArtSpotsScraper:
 #  print thing['href']
 
 for thing in FurAffinityScraper().parse_user('renardv'):
-  print thing['href']
+  print thing
 
 """
 from html.parser import HTMLParser
