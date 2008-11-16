@@ -1,10 +1,7 @@
 import scrapers
 import couchdb
 import dbviews
-import settings
-server = couchdb.Server(settings.server)
-db = server[settings.dbname]
-
+from settings import db
 
 def s3_cache(url):
   from urllib import urlopen
@@ -29,7 +26,7 @@ def scrape(network,user):
     old_sources[row.value['source']] = True
 
   for thing in scrapers.dispatch(network,user,old_sources):
-    thing['_id'] = thing['source']
+    #thing['_id'] = thing['source']
     thing['type'] = 'thing'
     thing['thumb'] = s3_cache(thing['thumb'])
-    db.update([thing])
+    db["thing-%s" % thing['source']]

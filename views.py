@@ -1,34 +1,8 @@
-import settings
+from settings import db
 import web
 import couchdb
 import dbviews
-server = couchdb.Server(settings.server)
-db = server[settings.dbname]
-from render import render
-
-you_query = """
-function(doc){
-  if(doc.type == 'user'){
-    doc.openids.forEach(function(openid){
-      emit(openid, {"name":doc.name, "accounts":doc.accounts, "openids":doc.openids})
-    })
-  }
-}"""
-
-
-def get_you():
-  openid = web.openid.status()
-  if openid:
-    possibles = db.query(you_query, startkey=openid, endkey=openid)
-    if len(possibles) == 0:
-      you = {'type':'user', 'openids':[openid], 'name':'anonymous', 'accounts':[]}
-      db.create(you)
-      return you
-    else:
-      for row in possibles:
-        return row.value
-  
-
+from viewtil import render, get_you, get_you_id
 
 class credits:
   def GET(self):
@@ -44,12 +18,38 @@ class index:
     users = [row.key for row in db.query(dbviews.map_users, dbviews.reduce_nothing, group=True)]
     return render('index',users=users, you=get_you())
 
+# Note: this may have to be changed if we make the form repeatable on the page
+account_forms = 10
+class settings:
+  def GET(self):
+    from scrapers import scrapers
+    return render('settings', you=get_you(), scrapers=scrapers.keys(), account_forms=account_forms)
+  def POST(self):
+    you = get_you()
+    params = web.input()
+    #return params
+    accounts = []
+    for x in xrange(account_forms):
+      network = params['network-%d' % x]
+      account = params['account-%d' % x]
+      if account and network:
+        accounts.append((network,account))
+    you['name'] = params['name']
+    you['accounts'] = accounts
+    db[you.id] = you
+    web.redirect('/') 
+
+class debug:
+  def GET(self):
+    return get_you()
 
 urls = (
   '/', index,
   '/login', web.openid.host,
+  '/settings', settings,
   '/credits', credits,
   '/users/(.*)', user,
+  '/debug', debug,
 )
 
 application = web.application(urls, locals())

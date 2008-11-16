@@ -12,11 +12,14 @@ def unique(list,attr):
 
 #### SCRAPERS
 
-def dispatch(network,user,old_sources):
-  if network == 'furaffinity':
-    return furaffinity(user, old_sources)
-  elif network == 'artspots':
-    return artspots(user, old_sources)
+def hola():
+  print "hola"
+
+
+
+def dispatch(network,*args,**kwargs):
+  scrapers[network](*args,**kwargs)
+
 
 
 def furaffinity(user, old_sources):
@@ -58,3 +61,9 @@ def artspots(user, old_sources):
       datum['thumb'] = thumb['src']
       datum['title'] = thumb['title']
       yield datum
+      
+      
+scrapers = {
+  'furaffinity':furaffinity,
+  'artspots':artspots,
+}

@@ -10,8 +10,13 @@ Ways to be smarter about this:
 
 
   todo:
-    user abstraction?  openid authentication! - ALMOST
-    types in the database (a user is not a post)
+    user settings page -
+    background job to grab your stuff
+    pagination
+    deploy it :D
+    icon -- choose an account, or put in an email address to get your gravatar.  upload?  mebbe
+    user abstraction?  openid authentication! -
+    types in the database (a user is not a post) -
     make it work with piclens
     fetch existing records from couch before scraping, so we know when we hid something we already have - CHECK
     cache the thumbnails myself with s3 - CHECK
