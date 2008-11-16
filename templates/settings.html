@@ -10,7 +10,7 @@
   <label for="network-{{number}}">Network</label>
   <select name="network-{{number}}" id="network-{{number}}" />
 # for network in scrapers
-    <option value="{{network}}" {% if you.accounts|len > number %} selected {% endif %}>{{network}}</option>
+    <option value="{{network}}" {% if you.accounts|len > number and you.accounts.network == network %} selected {% endif %}>{{network}}</option>
 #endfor
   </select>
   <label for="account-{{number}}">Account</label>

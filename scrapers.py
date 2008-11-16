@@ -18,7 +18,7 @@ def hola():
 
 
 def dispatch(network,*args,**kwargs):
-  scrapers[network](*args,**kwargs)
+  return scrapers[network](*args,**kwargs)
 
 
 
@@ -37,7 +37,7 @@ def furaffinity(user, old_sources):
         if source in old_sources: return
   
         thumb = thing.find('img')
-        datum = {'user':user, 'site':'furaffinity', 'source':source}
+        datum = {'site':'furaffinity', 'source':source}
         datum['thumb'] = thumb['src']
         datum['title'] = thumb['alt']        
         yield datum
@@ -56,7 +56,7 @@ def artspots(user, old_sources):
       source = thing['href']
       if datum['source'] in old_sources: return
 
-      datum = {'user':user, 'site':'artspots', 'source':source}
+      datum = {'site':'artspots', 'source':source}
       thumb = thing.find('img')
       datum['thumb'] = thumb['src']
       datum['title'] = thumb['title']

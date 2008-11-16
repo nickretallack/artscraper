@@ -5,8 +5,9 @@
   <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 <body>
+<a href="/">home</a> | 
 # if you
-logged in as {{you.name}}.
+logged in as {{you.name}} | <a href="/settings">settings</a> | 
 <form method="post" action="/login">
 <input type="hidden" name="action" value="logout" />  
 <input type="submit" value="Log Out">
@@ -16,15 +17,15 @@ logged in as {{you.name}}.
 <input type="text" name="openid" id="openid_identifier"/>
 <input type="submit" value="Log In">
 </form>
+
+<!-- BEGIN ID SELECTOR -->
+<script type="text/javascript" id="__openidselector" src="https://www.idselector.com/selector/ddb6106634870c12617f13ab740aa8f24b723b56" charset="utf-8"></script>
+<!-- END ID SELECTOR -->
 # endif
-<a href="/settings">settings</a>
   
   {% block content %}
     Nothing to see here
   {% endblock content %}
 
-  <!-- BEGIN ID SELECTOR -->
-  <script type="text/javascript" id="__openidselector" src="https://www.idselector.com/selector/ddb6106634870c12617f13ab740aa8f24b723b56" charset="utf-8"></script>
-  <!-- END ID SELECTOR -->
 </body>
 </html>

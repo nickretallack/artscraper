@@ -24,9 +24,3 @@ def get_you():
       you = {'type':'user', 'openids':[openid], 'name':'anonymous'}
       db[key] = you
       return you
-
-def get_you_id():
-  openid = web.openid.status()
-  for row in db.query(dbviews.map_you, startkey=openid, endkey=openid):
-    return row.id
-  

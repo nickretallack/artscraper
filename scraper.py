@@ -2,6 +2,7 @@ import scrapers
 import couchdb
 import dbviews
 from settings import db
+import settings
 
 def s3_cache(url):
   from urllib import urlopen
@@ -27,6 +28,22 @@ def scrape(network,user):
 
   for thing in scrapers.dispatch(network,user,old_sources):
     #thing['_id'] = thing['source']
+    thing['account'] = user
     thing['type'] = 'thing'
     thing['thumb'] = s3_cache(thing['thumb'])
-    db["thing-%s" % thing['source']]
+    db["thing-%s" % thing['source']] = thing
+    
+    
+from threading import Thread
+class Scraper(Thread):
+  def __init__(self, user):
+    Thread.__init__(self)
+    print "USER:", user
+    self.accounts = user['accounts']
+
+  def run(self):
+    for account in self.accounts:
+      network,user = account
+      print "network:",network,"user:",user
+      scrape(network,user)
+    print "Finished"
