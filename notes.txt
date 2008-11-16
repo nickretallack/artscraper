@@ -1,0 +1,18 @@
+Ways to be smarter about this:
+  when should we re-scrape?
+  scrape submission urls until we find one we already know, then stop
+  occasionally scrape for new galleries
+
+  documents:
+    user: accounts
+    thing:  user here (or not -- users know what's under em), user there (account?), source network, 
+            thumb url, source url, title, something age-related to sort by
+
+
+  todo:
+    cache the thumbnails myself with s3
+    
+    
+  ideas: (optional)
+    show linked pages in an iframe with next/prev links, ratings, faves
+    javascript page-mangling to make linked pages look better
