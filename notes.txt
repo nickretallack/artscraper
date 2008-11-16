@@ -4,15 +4,35 @@ Ways to be smarter about this:
   occasionally scrape for new galleries
 
   documents:
-    user: accounts
+    user: accounts(site,user)tuples, openids[], name
     thing:  user here (or not -- users know what's under em), user there (account?), source network, 
             thumb url, source url, title, something age-related to sort by
 
 
   todo:
-    cache the thumbnails myself with s3
+    user abstraction?  openid authentication! - ALMOST
+    types in the database (a user is not a post)
+    make it work with piclens
+    fetch existing records from couch before scraping, so we know when we hid something we already have - CHECK
+    cache the thumbnails myself with s3 - CHECK
+  
+  ethics page:
+    mashup commandments:
+      drive traffic back to the sites you scrape
+      don't leech bandwidth (cached with s3)
+    
+    faq:
+      It's illegal for you to scrape images from my site!
+      Tell that to google images first
+      
     
     
   ideas: (optional)
     show linked pages in an iframe with next/prev links, ratings, faves
     javascript page-mangling to make linked pages look better
+    cache a hash of the thumbnail so we can tell if it's updated?  Or maybe its url would change...
+    
+    
+  external dependencies:
+    couchdb connection, couch.py, httplib2, simplejson
+    

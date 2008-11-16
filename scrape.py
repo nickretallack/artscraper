@@ -1,5 +1,6 @@
 import scrapers
 import couchdb
+import dbviews
 import settings
 server = couchdb.Server(settings.server)
 db = server[settings.dbname]
@@ -22,7 +23,13 @@ def s3_url(url):
 
 
 def scrape(network,user):
-  for thing in scrapers.dispatch(network,user):
+  # we know we can stop when we discover a source page we've already scraped
+  old_sources = {}
+  for row in db.query(dbviews.map_things, startkey=user, endkey=user):
+    old_sources[row.value['source']] = True
+
+  for thing in scrapers.dispatch(network,user,old_sources):
     thing['_id'] = thing['source']
+    thing['type'] = 'thing'
     thing['thumb'] = s3_cache(thing['thumb'])
     db.update([thing])

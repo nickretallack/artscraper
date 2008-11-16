@@ -1,3 +1,4 @@
 .*.swp
 *~
 *.pyc
+.openid_secret_key

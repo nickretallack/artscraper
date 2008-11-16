@@ -12,14 +12,14 @@ def unique(list,attr):
 
 #### SCRAPERS
 
-def dispatch(network,user):
+def dispatch(network,user,old_sources):
   if network == 'furaffinity':
-    return furaffinity(user)
+    return furaffinity(user, old_sources)
   elif network == 'artspots':
-    return artspots(user)
+    return artspots(user, old_sources)
 
 
-def furaffinity(user):
+def furaffinity(user, old_sources):
   base = "http://furaffinity.net"
   galleries = ["/gallery/" + user,"/scraps/" + user]
   
@@ -30,14 +30,16 @@ def furaffinity(user):
       things = gallery_page.findAll('a',href=re.compile("/view/"))
       if len(things) == 0: break
       for thing in things:
-        datum = {'user':user, 'site':'furaffinity'}
-        datum['source'] = base + thing['href']
+        source = base + thing['href']
+        if source in old_sources: return
+  
         thumb = thing.find('img')
+        datum = {'user':user, 'site':'furaffinity', 'source':source}
         datum['thumb'] = thumb['src']
         datum['title'] = thumb['alt']        
         yield datum
 
-def artspots(user):
+def artspots(user, old_sources):
   base = "http://%s.artspots.com" % user
   
   user_page = get(base)
@@ -48,8 +50,10 @@ def artspots(user):
     gallery_page = get(base + gallery['href'] + page_str)
     things = gallery_page.findAll('a',href=re.compile("/image/"))
     for thing in things:
-      datum = {'user':user, 'site':'artspots'}
-      datum['source'] = thing['href']
+      source = thing['href']
+      if datum['source'] in old_sources: return
+
+      datum = {'user':user, 'site':'artspots', 'source':source}
       thumb = thing.find('img')
       datum['thumb'] = thumb['src']
       datum['title'] = thumb['title']
