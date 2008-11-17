@@ -1,12 +1,5 @@
 reduce_nothing = "function(keys,values){return 0}"
 
-map_things = """
-function(doc){
-  if(doc.type == 'image'){
-    emit([doc.account,doc.site],{"thumb":doc.thumb, "source":doc.source, "title":doc.title, "site":doc.site})
-  }
-}"""
-
 map_users = """
 function(doc){
   if(doc.type == 'user'){
@@ -18,6 +11,6 @@ function(doc){
 map_things = """
 function(doc){
   if(doc.type == 'thing'){
-    emit([doc.account,doc.site], {"thumb":doc.thumb, "source":doc.source})
+    emit(doc.account, {"thumb":doc.thumb, "source":doc.source})
   }
 }"""

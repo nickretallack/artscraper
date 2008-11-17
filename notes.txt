@@ -4,17 +4,39 @@ Ways to be smarter about this:
   occasionally scrape for new galleries
 
   documents:
-    user: accounts(site,user)tuples, openids[], name
-    thing:  user here (or not -- users know what's under em), user there (account?), source network, 
-            thumb url, source url, title, something age-related to sort by
+    user: accounts[{type,user}], openid, name
+    thing:  users{} set index, account{type,user}
+            thumb url, source url, title, something age-related to sort by.  Maybe ratings
+
+    whoops, looks like we need to key things with users, not accounts, sadly.  Lets refactor
+    
+    
+    algorithm:
+      when a user changes their account settings...
+      they may have added or removed user accounts
+      get a list of those added and removed
+      
+      
+      do not download a thumb again if we already have it
+      
+    aw fuckit, this is too complicated.  Lets just paginate with javascript.
+
+  issues:
+    when you first log in, the last thing the view does is get_you, 
+    meaning you may not have existed for the other queries on that page.
+    Hmm, what's a better way to handle get_you?
 
 
   todo:
-    user settings page -
-    background job to grab your stuff
-    pagination
+    random unique names for new users.  unique slugified names for urls
+      nah, perhaps blank users just don't get to be in urls
+      Still, changing your name should enforce uniqueness unless it's blank
+    pagination with javascript
+    make it look good
     deploy it :D
     icon -- choose an account, or put in an email address to get your gravatar.  upload?  mebbe
+    user settings page -
+    background job to grab your stuff -
     user abstraction?  openid authentication! -
     types in the database (a user is not a post) -
     make it work with piclens

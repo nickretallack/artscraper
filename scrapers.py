@@ -37,7 +37,7 @@ def furaffinity(user, old_sources):
         if source in old_sources: return
   
         thumb = thing.find('img')
-        datum = {'site':'furaffinity', 'source':source}
+        datum = {'source':source}
         datum['thumb'] = thumb['src']
         datum['title'] = thumb['alt']        
         yield datum
@@ -56,7 +56,7 @@ def artspots(user, old_sources):
       source = thing['href']
       if datum['source'] in old_sources: return
 
-      datum = {'site':'artspots', 'source':source}
+      datum = {'source':source}
       thumb = thing.find('img')
       datum['thumb'] = thumb['src']
       datum['title'] = thumb['title']

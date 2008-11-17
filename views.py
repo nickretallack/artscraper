@@ -8,20 +8,18 @@ class credits:
   def GET(self):
     return render('credits', you=get_you())
       
-class user:
+class things:
   def GET(self, username):
     for row in db.query(dbviews.map_users, startkey=username, endkey=username):
       user = row.value
+      print user
       break
       
     things = []
-    for account in user['accounts']:
-      network,name = account
-      print network,name
-      for row in db.query(dbviews.map_things): #db.query(dbviews.map_things, startkey=[name,network], endkey=[name,network]):
-        print row
-        things.append(row.value)
-      print 'after'
+    if 'accounts' in user:
+      for account in user['accounts']:
+        for row in db.query(dbviews.map_things, startkey=account, endkey=account):
+          things.append(row.value)
       
     return render('user', user=user, things=things, you=get_you())
 
@@ -40,14 +38,16 @@ class settings:
   def POST(self):
     you = get_you()
     params = web.input()
+    
     accounts = []
     for x in xrange(account_forms):
-      network = params['network-%d' % x]
-      account = params['account-%d' % x]
-      if account and network:
-        accounts.append((network,account))
-    you['name'] = params['name']
+      type = params['type-%d' % x]
+      user = params['user-%d' % x]
+      if type and user:
+        accounts.append({'type':type,'user':user})
+        
     you['accounts'] = accounts
+    you['name'] = params['name']
     db[you.id] = you
     
     from scraper import Scraper
@@ -56,18 +56,12 @@ class settings:
     web.redirect('/')
 
 
-
-class debug:
-  def GET(self):
-    return get_you()
-
 urls = (
   '/', index,
   '/login', web.openid.host,
   '/settings', settings,
   '/credits', credits,
-  '/users/(.*)', user,
-  '/debug', debug,
+  '/users/(.*)', things,
 )
 
 application = web.application(urls, locals())

@@ -7,14 +7,14 @@
 <h3>Accounts</h3>
 # for number in range(account_forms)
 <p>
-  <label for="network-{{number}}">Network</label>
-  <select name="network-{{number}}" id="network-{{number}}" />
-# for network in scrapers
-    <option value="{{network}}" {% if you.accounts|len > number and you.accounts.network == network %} selected {% endif %}>{{network}}</option>
+  <label for="type-{{number}}">Type</label>
+  <select name="type-{{number}}" id="type-{{number}}" />
+# for type in scrapers
+    <option value="{{type}}" {% if you.accounts|len > number and you.accounts[number].type == type %} selected {% endif %}>{{type}}</option>
 #endfor
   </select>
-  <label for="account-{{number}}">Account</label>
-  <input type="text" name="account-{{number}}" id="account-{{number}}" {% if you.accounts|len > number %}value="{{you.accounts[number][1]}}"{% endif %} />
+  <label for="user-{{number}}">user</label>
+  <input type="text" name="user-{{number}}" id="user-{{number}}" {% if you.accounts|len > number %}value="{{you.accounts[number].user}}"{% endif %} />
 </p>
 # endfor
 
