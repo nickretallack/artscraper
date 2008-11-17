@@ -7,7 +7,7 @@
 <body>
 <a href="/">home</a> | 
 # if you
-logged in as {{you.name}} | <a href="/settings">settings</a> | 
+logged in as {{you.name|you_link}} | <a href="/settings">settings</a> | 
 <form method="post" action="/login">
 <input type="hidden" name="action" value="logout" />  
 <input type="submit" value="Log Out">

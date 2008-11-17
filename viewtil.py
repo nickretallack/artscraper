@@ -1,9 +1,17 @@
-def user_url(user):
-  return '/users/%s' % user
+def user_link(name):
+  if name:
+    return "<a href=\"/users/%s\">%s</a>" % (name,name)
+
+def you_link(name):
+  if name:
+    return user_link(name)
+  else:
+    return "<a href=\"/you\">anonymous</a>"
 
 import jinja2
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'), line_statement_prefix="#")
-env.filters['user_url'] = user_url
+env.filters['user_link'] = user_link
+env.filters['you_link'] = you_link
 env.filters['len'] = len
 
 
@@ -21,6 +29,6 @@ def get_you():
     if key in db:
       return db[key]
     else:
-      you = {'type':'user', 'openids':[openid], 'name':'anonymous'}
+      you = {'type':'user', 'openids':[openid]}
       db[key] = you
       return you
