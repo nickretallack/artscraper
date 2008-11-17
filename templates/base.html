@@ -2,30 +2,31 @@
 <html>
 <head>
   <title>{% block title %}ArtScraper{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="/static/reset.css">
   <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
-<body>
-<a href="/">home</a> | 
-# if you
-logged in as {{you.name|you_link}} | <a href="/settings">settings</a> | 
-<form method="post" action="/login">
-<input type="hidden" name="action" value="logout" />  
-<input type="submit" value="Log Out">
-</form>
-# else
-<form method="post" action="/login">
-<input type="text" name="openid" id="openid_identifier"/>
-<input type="submit" value="Log In">
-</form>
 
-<!-- BEGIN ID SELECTOR -->
+<body>
+<div id="header">
+
+# block breadcrumbs
+<a href="/" id="home">ArtScraper</a>
+# endblock
+
+<div id="userinfo">
+# if you
+logged in as {{you.name|you_link}} 
+<a href="/settings" id="settings">settings</a><form method="post" action="/login" id="logout-form"><input type="hidden" name="action" value="logout" /><input type="submit" value="Log Out" id="logout"></form>
+# else
+<form method="post" action="/login" id="login-form"><input type="text" name="openid" id="openid_identifier"/><input type="submit" id="login" value="Log In"></form>
 <script type="text/javascript" id="__openidselector" src="https://www.idselector.com/selector/ddb6106634870c12617f13ab740aa8f24b723b56" charset="utf-8"></script>
-<!-- END ID SELECTOR -->
 # endif
-  
+</div>
+</div> 
+<div id="content"> 
   {% block content %}
     Nothing to see here
   {% endblock content %}
-
+</div>
 </body>
 </html>

@@ -38,16 +38,16 @@ class user:
       return "Not Found"
     
     things = user_things(user)
-    name = user['name'].capitalize() + "'s"
+    name = user['name'].capitalize()
     return render('user', user=user, things=things, you=get_you(), name=name)
 
 class index:
   def GET(self):
-    users = [row.key for row in db.query(dbviews.map_users)]
+    users = [row.value for row in db.query(dbviews.map_users) if 'slug' in row.value]
     return render('index',users=users, you=get_you())
 
 # Note: this may have to be changed if we make the form repeatable on the page
-account_forms = 10
+account_forms = 12
 class settings:
   def GET(self):
     from scrapers import scrapers

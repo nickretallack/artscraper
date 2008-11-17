@@ -1,9 +1,10 @@
 reduce_nothing = "function(keys,values){return 0}"
 
+# this should be replaced with ?include_docs eventually
 map_users = """
 function(doc){
   if(doc.type == 'user'){
-    emit(doc.slug, {"name":doc.name, "accounts":doc.accounts})
+    emit(doc.slug, {"name":doc.name, "accounts":doc.accounts, "thumb":doc.thumb, "slug":doc.slug})
   }
 }"""
 

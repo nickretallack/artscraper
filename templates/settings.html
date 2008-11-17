@@ -1,24 +1,31 @@
 # extends 'base.html'
-# block content
-<h2>Settings</h2>
-<form action="/settings" method="post">
-<label for="name">Name:</label><input type="text" name="name" id="name" value="{{you.name}}" />{{errors}}
 
-<h3>Accounts</h3>
+# block title
+{{super()}} : Settings
+# endblock
+
+# block breadcrumbs
+<div id="current">{{super()}} Settings</div>
+# endblock
+
+# block content
+<form action="/settings" method="post">
+<label for="name">Name:</label> <input type="text" name="name" id="name" value="{{you.name}}" />{{errors}}
+<input type="submit" value="Save">  
+
+<h2>Accounts</h2>
+<div class="halfcols">
 # for number in range(account_forms)
 <p>
-  <label for="type-{{number}}">Type</label>
   <select name="type-{{number}}" id="type-{{number}}" />
 # for type in scrapers
     <option value="{{type}}" {% if you.accounts|len > number and you.accounts[number].type == type %} selected {% endif %}>{{type}}</option>
 #endfor
   </select>
-  <label for="user-{{number}}">user</label>
   <input type="text" name="user-{{number}}" id="user-{{number}}" {% if you.accounts|len > number %}value="{{you.accounts[number].user}}"{% endif %} />
 </p>
 # endfor
-
-<input type="submit" value="Save">  
+</div>
 </form>
 
 # endblock

@@ -1,6 +1,5 @@
-def user_link(name):
-  if name:
-    return "<a href=\"/users/%s\">%s</a>" % (name,name)
+def user_url(user):
+  return "/users/%s" % user['slug']
 
 def you_link(name):
   if name:
@@ -10,7 +9,7 @@ def you_link(name):
 
 import jinja2
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'), line_statement_prefix="#")
-env.filters['user_link'] = user_link
+env.filters['user_url'] = user_url
 env.filters['you_link'] = you_link
 env.filters['len'] = len
 

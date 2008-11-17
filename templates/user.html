@@ -1,9 +1,14 @@
 # extends "base.html"
+
 # block title
 {{super()}} : {{name}}
 # endblock
+
+# block breadcrumbs
+<span id="current">{{super()}} {{name}}</span>
+# endblock
+
 # block content
-<h2> {{name}} Things </h2>
 # for thing in things
 <a href="{{thing.source}}" style="background-image:url('{{thing.thumb}}')" class="thumb fa"></a>
 # endfor

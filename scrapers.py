@@ -54,7 +54,7 @@ def artspots(user, old_sources):
     things = gallery_page.findAll('a',href=re.compile("/image/"))
     for thing in things:
       source = thing['href']
-      if datum['source'] in old_sources: return
+      if source in old_sources: return
 
       datum = {'source':source}
       thumb = thing.find('img')

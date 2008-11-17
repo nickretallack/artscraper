@@ -28,19 +28,32 @@ def scrape(type,user):
 
   for thing in scrapers.dispatch(type,user,old_sources):
     key = "thing-%s" % thing['source']
-    thing['account'] = {'user':user, 'type':type}
-    thing['type'] = 'thing'
-    thing['thumb'] = s3_cache(thing['thumb'])
-    db[key] = thing
+    if key not in db:
+      thing['account'] = {'user':user, 'type':type}
+      thing['type'] = 'thing'
+      thing['thumb'] = s3_cache(thing['thumb'])
+      try:
+        db[key] = thing
+      except:
+        print "Failed to put this in the database:", thing
+      yield thing['thumb']
     
     
 from threading import Thread
 class Scraper(Thread):
   def __init__(self, user):
     Thread.__init__(self)
-    self.accounts = user.get('accounts',None)
+    self.user = user
 
   def run(self):
-    for account in self.accounts:
-      scrape(account['type'],account['user'])
+    new_icon_acquired = False
+    for account in self.user.get('accounts',None):
+      for thumb in scrape(account['type'],account['user']):
+        if not new_icon_acquired:
+          self.user['thumb'] = thumb
+          try:
+            db[self.user.id] = self.user
+            new_icon_acquired = True
+          except:
+            print "Failed to update user icon:", self.user
     print "Finished"

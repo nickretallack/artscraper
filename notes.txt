@@ -28,10 +28,11 @@ Ways to be smarter about this:
 
 
   todo:
-    make it look good
+    make views permanent
     pagination with javascript
     deploy it :D
     icon -- choose an account, or put in an email address to get your gravatar.  upload?  mebbe
+    make it look good -
     unique slugified names for urls -
       blank users just don't get to be in urls -
       Still, changing your name should enforce uniqueness unless it's blank -

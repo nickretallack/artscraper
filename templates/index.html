@@ -1,9 +1,15 @@
 # extends "base.html"
+
+# block breadcrumbs
+<span id="current">{{super()}} Users</span>
+# endblock
+
+
 # block content
-<h2> Users </h2>
 <ul>
 # for user in users
-<li>{{user|user_link}}</li>
+<li><a href="{{user|user_url}}">{{user.name}}</a></li>
+<img src="{{user.thumb}}">
 # endfor
 </ul>
 # endblock
