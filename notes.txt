@@ -28,17 +28,14 @@ Ways to be smarter about this:
 
 
   todo:
-    make views permanent
-    pagination with javascript
-      calculates available screen space and fills it with <a>s.
-      pagination start algorithm: top left? maybe something more complex later
-      slider for icon size, starts at 120px
-      slider to scrub to a particular page?
-        have it wait a moment so we don't waste bandwidth on the wrong page of thumbs
-    refactor css into sections (corners, colors, etc)
+    put comments on stuff page
+    test in internet explorer and safari
     deploy it with lighty+fastcgi like reddit
       needs couchdb (get an ebuild?), various python libs (easy_install)
-    
+
+    make views permanent - 
+    ghetto ass pagination -
+    refactor css into sections (corners, colors, etc) -
     icon = your latest scraped thumb -
     make it look good -
     unique slugified names for urls -
@@ -67,6 +64,12 @@ Ways to be smarter about this:
     show linked pages in an iframe with next/prev links, ratings, faves
     javascript page-mangling to make linked pages look better
     cache a hash of the thumbnail so we can tell if it's updated?  Or maybe its url would change...
+    pagination with javascript
+      calculate available screen space and fills it with <a>s.
+      pagination start algorithm: top left? maybe something more complex later
+      slider for icon size, starts at 120px
+      slider to scrub to a particular page?
+        have it wait a moment so we don't waste bandwidth on the wrong page of thumbs
     
     
   external dependencies:

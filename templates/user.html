@@ -1,15 +1,58 @@
 # extends "base.html"
 
 # block title
-{{super()}} : {{name}}
+{{super()}} : {{user|you_name}}
 # endblock
 
+# block head_extras
+<script type="text/javascript">
+var things = [
+  {% for thing in things %}
+    {source:"{{thing.source}}",thumb:"{{thing.thumb}}"},
+  {% endfor %}]
+
+console.debug("cool")
+$(document).ready(function(){
+  console.debug($('#content').innerWidth)  
+})
+
+
+
+</script>
+# endblock
+
+
 # block breadcrumbs
-<span id="current">{{super()}} {{name}}</span>
+<span id="current">{{super()}} {{user|you_name}}</span>
 # endblock
 
 # block content
-# for thing in things
+<div class="pages">
+
+# if this_page == 1
+<span class="disabled page">Previous</span>
+# else
+<a class="page" href="{{user|user_url}}?page={{this_page-1}}">Previous</a>
+# endif
+
+# for page in range(1,pages+1)
+# if page == this_page
+<span class="this page">{{page}}</span>
+# else
+<a class="page" href="{{user|user_url}}?page={{page}}">{{page}}</a>
+# endif
+# endfor
+
+# if this_page == pages
+<span class="disabled page">Next</span>
+# else
+<a class="page" href="{{user|user_url}}?page={{this_page+1}}">Next</a>
+# endif
+</div>
+
+<div class="gallery">
+# for thing in visible_things
 <a href="{{thing.source}}" style="background-image:url('{{thing.thumb}}')" class="thumb fa"></a>
 # endfor
+</div>
 # endblock

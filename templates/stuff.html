@@ -1,0 +1,29 @@
+# extends 'base.html'
+
+# block title
+{{super()}} : Stuff
+# endblock
+
+# block breadcrumbs
+<div id="current">{{super()}} Stuff</div>
+# endblock
+
+
+# block content
+<p>I'm lazy.  I'll put stuff here later</p>
+<h2>Credits</h2>
+<p>Here are some of the awesome things that helped make this site possible</p>
+<ul>
+<li><a href="http://python.org/">The Python Community</a>
+<li><a href="http://aws.amazon.com/s3/">Amazon S3</a> - image caching
+<li><a href="http://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a> - html parsing
+<li><a href="http://incubator.apache.org/couchdb/">CouchDB</a> - database
+<li><a href="http://code.google.com/p/couchdb-python/">couchdb-python</a> - database interaction
+<li><a href="http://webpy.org/">web.py</a> - web interface
+<li><a href="http://jinja.pocoo.org/">jinja</a> - html templates
+<li><a href="http://openidenabled.com/python-openid/">openid</a> - user authentication
+</pre>
+
+<p>Think this site looks oogleh?  Whip out <a href="https://addons.mozilla.org/en-US/firefox/addon/1843">Firebug</a>
+  and mock up your own stylesheet for it, send it to <img class="emadr" src="/static/emadr.png" /> and I'll include it as an alt.</p>
+# endblock

@@ -7,12 +7,18 @@ def you_link(user):
   else:
     return "<a href=\"/you\">anonymous</a>"
 
+def you_name(user):
+  if 'name' in user:
+    return user['name']
+  else:
+    return "you"
+
 import jinja2
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'), line_statement_prefix="#")
 env.filters['user_url'] = user_url
 env.filters['you_link'] = you_link
+env.filters['you_name'] = you_name
 env.filters['len'] = len
-
 
 def render(template,**args):
   return env.get_template(template+'.html').render(**args)

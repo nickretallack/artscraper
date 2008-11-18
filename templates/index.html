@@ -6,16 +6,16 @@
 
 
 # block content
-<ul>
-<p id="blurb">Welcome to ArtScraper, a simple service designed to build one big thumbnail library for all the art you post online, 
-  be it on <a href="http://furaffinity.net">FurAffinity</a>, <a href="http://artspots.com">Artspots</a>, or your own personal website (coming soon).
-  <a href="/credits">more...</a>
+<p id="blurb">Welcome to ArtScraper, a simple service designed to help you build one big thumbnail library for all the art you post online.
+  Currently we support <a href="http://furaffinity.net">FurAffinity</a> and <a href="http://artspots.com">Artspots</a>.
+  To make a gallery of your own, just log in with your favorite <a href="http://openid.net/get/">OpenID provider</a>.
+  <br><a href="/stuff">Tell me more...</a>
   
 </p>
 <h2>Users</h2>
+<ul>
 # for user in users
 <li><a href="{{user|user_url}}">{{user.name}}</a></li>
-<img src="{{user.thumb}}">
 # endfor
 </ul>
 # endblock

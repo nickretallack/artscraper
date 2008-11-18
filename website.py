@@ -5,8 +5,11 @@ web.webapi.internalerror = web.debugerror
 if __name__ == "__main__":
   # Make sure environment variables are set!
   from os import environ
-  if 'AMAZON_SECRET' in environ and 'AMAZON_KEY' in environ:
-    from views import application
-    application.run()
-  else:
+  if 'AMAZON_SECRET' not in environ or 'AMAZON_KEY' not in environ:
     print "Set your AMAZON_KEY and AMAZON_SECRET environment variables"
+    
+  from settings import view_sync
+  view_sync()
+    
+  from views import application
+  application.run()

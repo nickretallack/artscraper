@@ -4,22 +4,22 @@ import couchdb
 import dbviews
 from viewtil import render, get_you
 
-class credits:
+class stuff:
   def GET(self):
-    return render('credits', you=get_you())
+    return render('stuff', you=get_you())
 
 class you:
   def GET(self):
     you = get_you()
     things = user_things(you)
-    return render('user', user="your", things=things, you=you, name="Your")
+    return render('user', user="your", things=things, you=you)
 
 
 def user_things(user):
   things = []
   if 'accounts' in user:
     for account in user['accounts']:
-      for row in db.query(dbviews.map_things, startkey=account, endkey=account):
+      for row in dbviews.things(db, startkey=account, endkey=account):
         things.append(row.value)
   return things
 
@@ -29,9 +29,8 @@ class user:
       return "Not Found"
 
     user = None
-    for row in db.query(dbviews.map_users, startkey=user_slug, endkey=user_slug):
+    for row in dbviews.users(db, startkey=user_slug, endkey=user_slug):
       user = row.value
-      print user
       break
     
     if not user:
@@ -39,11 +38,20 @@ class user:
     
     things = user_things(user)
     name = user['name']
-    return render('user', user=user, things=things, you=get_you(), name=name)
+
+    # pagination
+    per_page = 60
+    pages = len(things)/per_page + 1
+    params = web.input(page=1)
+    page = min(pages,max(1,int(params['page'])))
+    start_thing = (page-1)*per_page
+    visible_things = things[start_thing:(start_thing + per_page)]
+
+    return render('user', user=user, things=things, visible_things=visible_things, you=get_you(), pages=pages, this_page=page)
 
 class index:
   def GET(self):
-    users = [row.value for row in db.query(dbviews.map_users) if 'slug' in row.value]
+    users = [row.value for row in dbviews.users(db) if 'slug' in row.value]
     return render('index',users=users, you=get_you())
 
 # Note: this may have to be changed if we make the form repeatable on the page
@@ -71,7 +79,7 @@ class settings:
     name = params['name']
     if name and name != you.get('name',None):
       slug = slugify(name)
-      for row in db.query(dbviews.map_slugs):
+      for row in dbviews.slugs(db):
         if slug == row.key:
           unique = False
           break
@@ -111,7 +119,7 @@ urls = (
   '/', index,
   '/login', web.openid.host,
   '/settings', settings,
-  '/credits', credits,
+  '/stuff', stuff,
   '/users/(.*)', user,
   '/you', you,
 )

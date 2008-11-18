@@ -22,3 +22,10 @@ function(doc){
     emit(doc.slug,null)
   }
 }"""
+
+from couchdb.design import ViewDefinition as View
+users  = View('users','show',map_users)
+slugs  = View('users','slugs',map_slugs)
+things = View('things','show',map_things)
+
+views = [users,slugs,things]
