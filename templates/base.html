@@ -15,7 +15,7 @@
 
 <div id="userinfo">
 # if you
-logged in as {{you.name|you_link}} 
+logged in as {{you|you_link}} 
 <a href="/settings" id="settings">settings</a><form method="post" action="/login" id="logout-form"><input type="hidden" name="action" value="logout" /><input type="submit" value="Log Out" id="logout"></form>
 # else
 <form method="post" action="/login" id="login-form"><input type="text" name="openid" id="openid_identifier"/><input type="submit" id="login" value="Log In"></form>

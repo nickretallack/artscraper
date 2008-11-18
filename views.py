@@ -38,7 +38,7 @@ class user:
       return "Not Found"
     
     things = user_things(user)
-    name = user['name'].capitalize()
+    name = user['name']
     return render('user', user=user, things=things, you=get_you(), name=name)
 
 class index:

@@ -1,9 +1,9 @@
 def user_url(user):
   return "/users/%s" % user['slug']
 
-def you_link(name):
-  if name:
-    return user_link(name)
+def you_link(user):
+  if 'slug' in user and 'name' in user:
+    return "<a href=\"%s\">%s</a>" % (user_url(user),user['name'])
   else:
     return "<a href=\"/you\">anonymous</a>"
 
