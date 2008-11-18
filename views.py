@@ -11,6 +11,10 @@ class stuff:
 class you:
   def GET(self):
     you = get_you()
+    if not you:
+      web.redirect('/')
+      return
+
     things = user_things(you)
     return render('user', user="your", things=things, you=you)
 
@@ -58,11 +62,20 @@ class index:
 account_forms = 12
 class settings:
   def GET(self):
+    you = get_you()
+    if not you:
+      web.redirect('/')
+      return
+      
     from scrapers import scrapers
     return render('settings', you=get_you(), scrapers=scrapers.keys(), account_forms=account_forms)
     
   def POST(self):
     you = get_you()
+    if not you:
+      web.redirect('/')
+      return
+
     params = web.input()
     
     # set accounts

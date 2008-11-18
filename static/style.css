@@ -6,8 +6,8 @@ input {display:inline;}
 
 #header{ height:1.5em; line-height:1.5em;}
 html { font-size:1.3em; font-family:helvetica; min-width:750px;}
-p {margin:1ex 0;}
-.halfcols {-moz-column-width:35ex;}
+.halfcols {-moz-column-width:35ex; margin:2ex;}
+.halfcols p {margin-right:0; margin-left:0;}
 #userinfo {position:absolute; right:0; top:0; height:1.5em;}
 input, select {font-size:inherit; font-family:inherit;}
 #header input{ border:none;}
@@ -32,12 +32,12 @@ input, select {font-size:inherit; font-family:inherit;}
 .disabled.page {color:lightgray; border:none;}
 
 .emadr {vertical-align:-25%;}
-p, ul, .gallery {margin:1ex;}
+p, ul, .gallery {margin:2ex;}
 
 
 /* colors */
 a {color:#ff7c00; text-decoration:none;}
-h2 {background-color:#00808d; color:white; margin:1ex 0 !important; text-align:center;}
+h2 {background-color:#00808d; color:white; margin:1ex 0 !important; text-align:center; padding-top:.2ex;}
 #home, #settings {background-color:#00808d;border-bottom-color: #ff7c00;}
 #current {background-color:#003399; border-bottom-color:#c60000;}
 #header {background-color:#660099; border-bottom:5px solid #00808d; color:white;}
@@ -46,6 +46,6 @@ h2 {background-color:#00808d; color:white; margin:1ex 0 !important; text-align:c
 #openid_identifier {background-color:#D5CCFF; }
 
 /* corners -- should add the props for other browsers */
-#home, #current {-moz-border-top-right-radius:1ex; -webkit-border-top-right-radius:1ex;}
+#home, #current {-moz-border-radius:0 1ex 0 0; -webkit-border-top-right-radius:1ex;}
 #settings { -moz-border-radius:1ex 0 0 1ex; -webkit-border-top-left-radius:1ex; -webkit-border-bottom-left-radius:1ex;}
-#openid_identifier {-moz-border-top-left-radius:1ex; -webkit-border-top-left-radius:1ex;}
+#openid_identifier {-moz-border-radius:1ex 0 0 0; -webkit-border-top-left-radius:1ex;}

@@ -29,10 +29,10 @@ Ways to be smarter about this:
 
   todo:
     put comments on stuff page
-    test in internet explorer and safari
     deploy it with lighty+fastcgi like reddit
       needs couchdb (get an ebuild?), various python libs (easy_install)
 
+    test in internet explorer and safari -
     make views permanent - 
     ghetto ass pagination -
     refactor css into sections (corners, colors, etc) -
@@ -45,9 +45,8 @@ Ways to be smarter about this:
     background job to grab your stuff -
     user abstraction?  openid authentication! -
     types in the database (a user is not a post) -
-    make it work with piclens
-    fetch existing records from couch before scraping, so we know when we hid something we already have - CHECK
-    cache the thumbnails myself with s3 - CHECK
+    fetch existing records from couch before scraping, so we know when we hid something we already have -
+    cache the thumbnails myself with s3 -
   
   ethics page:
     mashup commandments:
@@ -70,8 +69,9 @@ Ways to be smarter about this:
       slider for icon size, starts at 120px
       slider to scrub to a particular page?
         have it wait a moment so we don't waste bandwidth on the wrong page of thumbs
+    make it work with piclens
     
     
   external dependencies:
-    couchdb connection, couch.py, httplib2, simplejson
+    couchdb connection, couch.py(httplib2, simplejson), web.py
     
