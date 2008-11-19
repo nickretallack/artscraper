@@ -10,7 +10,7 @@ s3_bucket = db_name
 server = couchdb.Server(server_url)
 
 if db_name not in server:
-  db.create(db_name)
+  server.create(db_name)
 db = server[db_name]
 
 def view_sync():
