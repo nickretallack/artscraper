@@ -65,5 +65,5 @@ def artspots(user, old_sources):
       
 scrapers = {
   'furaffinity':furaffinity,
-  'artspots':artspots,
+  #'artspots':artspots,
 }

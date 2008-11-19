@@ -5,15 +5,17 @@ from settings import db
 import settings
 
 def s3_cache(url):
-  from urllib import urlopen
+  from urllib import urlopen, quote
   from lib import S3
   s3 = S3.AWSAuthConnection(settings.aws_key, settings.aws_secret)
   data = urlopen(url)
   mime = data.info()
   sendable = S3.S3Object(data.read()) # could set metadata here
   headers = {'x-amz-acl':'public-read', 'Content-Type': mime.gettype()}
-  print s3.put(settings.s3_bucket, url, sendable, headers).message
-  return s3_url(url)
+  quoted_url = quote(url.split('?',1)[0]) # remove query so it has a clean file extension on the end
+  s3url = s3_url(quoted_url)
+  print s3.put(settings.s3_bucket, quoted_url, sendable, headers).message, s3url
+  return s3url
 
 def s3_url(url):
   host = "http://s3.amazonaws.com"
