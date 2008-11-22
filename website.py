@@ -1,5 +1,7 @@
+#!/usr/bin/env python
 import web
 web.webapi.internalerror = web.debugerror
+web.config.debug = True
 
 
 if __name__ == "__main__":
