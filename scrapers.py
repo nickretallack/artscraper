@@ -12,15 +12,8 @@ def unique(list,attr):
 
 #### SCRAPERS
 
-def hola():
-  print "hola"
-
-
-
 def dispatch(network,*args,**kwargs):
   return scrapers[network](*args,**kwargs)
-
-
 
 def furaffinity(user, old_sources):
   base = "http://furaffinity.net"
@@ -62,6 +55,35 @@ def artspots(user, old_sources):
       datum['title'] = thumb['title']
       yield datum
       
+
+def deviantart(user, old_sources=[]):
+  gallery_url = "http://%s.deviantart.com/gallery/v1/" % user
+  print gallery_url
+  per_page = 24
+
+  for page in xrange(999):
+    page_url = "%s?offset=%d" % (gallery_url, page * per_page)
+    gallery_page = get(page_url)
+    #print gallery_page
+    things = gallery_page.findAll('a', href=re.compile("/art/"))
+    if len(things) == 0: break
+    for thing in things:
+      source = thing['href']
+      if source in old_sources: return
+
+      thumb = thing.find('img')
+      if not thumb: 
+        continue
+
+      datum = {'source':source, 'thumb':thumb['src'], 'title':thing['title']}
+      yield datum
+
+  
+if __name__ == "__main__":
+  for x in deviantart("sayael"):
+    print x
+
+
       
 scrapers = {
   'furaffinity':furaffinity,
